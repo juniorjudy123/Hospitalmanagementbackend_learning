@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Home</title>
+		<style>
+			.links {
+				display: flex;
+				gap: 20px; /* Space between the links */
+				align-items: center;
+			}
+			.links p {
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Welcome to the Hospital Management System</h1>
+		<div class="links">
+			<a href="{% url 'viewDepartments' %}">Departments</a>
+			<a href="/admin/">Admin</a>
+			<a href="{% url 'viewDoctors' %}">Our Doctors</a>
+			<a href="{% url 'registerPatients' %}">Register</a>
+		</div>
+	</body>
+</html>

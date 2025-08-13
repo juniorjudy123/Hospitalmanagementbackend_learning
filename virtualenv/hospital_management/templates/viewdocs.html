@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Departments</title>
+		<style>
+			table {
+				width: 60%;
+				border-collapse: collapse;
+				margin: 20px auto;
+			}
+			th,
+			td {
+				border: 1px solid #888;
+				padding: 10px;
+				text-align: left;
+			}
+			th {
+				background-color: #eee;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Departments</h1>
+
+		<p>Our panel of Doctors</p>
+		<p>Return to <a href="{% url 'index' %}">Home</a></p>
+		<h2 style="text-align: center">Our Doctors</h2>
+		<table>
+			<tr>
+				<th>Name</th>
+				<th>photo_id</th>
+				<th>department</th>
+			</tr>
+
+			{% for i in data %}
+			<tr>
+				<td>{{i.doctor_name }}</td>
+				<td><img alt="doctor_img" src="{{i.doctor_img.url }} " style="width: 100px; height: 100px;
+            "></img></td>
+				<td>{{i.dept_name }}</td>
+			</tr>
+
+			{% empty %}
+			<tr></tr>
+			{% endfor %}
+		</table>
+	</body>
+</html>
