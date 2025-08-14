@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib import messages
+from django.http import HttpResponse
 
 # Create your views here.
 from django.http import HttpResponse
@@ -18,7 +20,7 @@ def viewDoctors(request):
     print(data)
     return render(request, 'viewdocs.html', {'data': data})
    
-def registerPatients(request):
+def register(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         phone = request.POST.get('phone')
@@ -27,7 +29,7 @@ def registerPatients(request):
         cnpassword = request.POST.get('cnpassword')
         
         if password != cnpassword:
-            return HttpResponse("Passwords do not match.")
+            messages.error(request, "Passwords do not match.")
         
         new_patient = reg_tbl(
             name=name,
@@ -40,25 +42,38 @@ def registerPatients(request):
         new_patient.save()
       
        
-        return HttpResponse("Registration successful!")
+         # Show success message and redirect to login
+        messages.success(request, "Registration successful! Please log in.")
+        return redirect('loginUser')  
     
-    return render(request, 'regform.html')  # Render the registration form template
+    return render(request, 'regform.html')  
 
 
 
 def loginUser(request):
     if request.method == 'POST':
-        email=request.POST.get('email')
-        password=request.POST.get('password')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
         try:
+            # Get the single user matching credentials
             user = reg_tbl.objects.get(email=email, password=password)
-            
-            if user:
-                return HttpResponse(f"Welcome {user.name}!")
-        
+
+            # Save details to session
+            request.session['id1'] = user.id
+            request.session['name'] = user.name
+            request.session['email'] = user.email
+            request.session['password'] = user.password  # not recommended for security
+            request.session['user_type'] = user.user_type
+
+            # Redirect based on user type
+            if user.user_type.lower() == "admin":
+                return render(request, 'admin.html')
+            else:
+                return render(request, 'patient.html')
+
         except reg_tbl.DoesNotExist:
             return HttpResponse("Invalid email or password.")
-   
-    return render(request, 'login.html')  # Render the login form template      
 
+    # For GET request, show the login page
+    return render(request, 'login.html')

@@ -52,11 +52,17 @@
 				margin-top: 10px;
 				text-align: center;
 			}
+			.note {
+				margin-top: 15px;
+				text-align: center;
+				font-size: 14px;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
 			<h2>Patient Login</h2>
+
 			<form method="post">
 				{% csrf_token %}
 				<label for="email">Email</label>
@@ -71,6 +77,10 @@
 			{% if error %}
 			<div class="error">{{ error }}</div>
 			{% endif %}
+			<div class="note">
+				Dont have an account?
+				<a href="{% url 'register' %}">Register</a>
+			</div>
 		</div>
 	</body>
 </html>

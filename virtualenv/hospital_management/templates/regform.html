@@ -26,7 +26,8 @@
 				margin-top: 15px;
 				font-weight: bold;
 			}
-			input {
+			input,
+			select {
 				width: 100%;
 				padding: 8px;
 				margin-top: 5px;
@@ -108,11 +109,23 @@
 				</ul>
 				{% endif %}
 
+				<label for="user_type">User Type</label>
+				<select name="user_type" id="user_type" required>
+					<option value="" disabled selected>Select user type</option>
+					<option value="patient">Patient</option>
+					<option value="doctor">Doctor</option>
+					<option value="admin">Admin</option>
+				</select>
+				{% if form.user_type.errors %}
+				<ul class="errorlist">
+					{{ form.user_type.errors }}
+				</ul>
+				{% endif %}
+
 				<button type="submit">Register</button>
 			</form>
-
 			<div class="note">
-				Already have an account? <a href="{% url 'loginUser' %}">Login here</a>
+				<a href="{% url 'loginUser' %}">Login</a>
 			</div>
 		</div>
 	</body>
