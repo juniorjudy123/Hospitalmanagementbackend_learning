@@ -1,8 +1,6 @@
+# Create your views here.
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from django.http import HttpResponse
-
-# Create your views here.
 from django.http import HttpResponse
 from .models import Dept_tbl, Doctor_tbl, reg_tbl
 
