@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>All Appointments</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background: #f4f6f9;
+				padding: 30px;
+			}
+
+			h1 {
+				text-align: center;
+				color: #6a11cb;
+				margin-bottom: 20px;
+			}
+
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				background: white;
+				border-radius: 8px;
+				overflow: hidden;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+			}
+
+			th,
+			td {
+				padding: 12px 15px;
+				text-align: left;
+				border-bottom: 1px solid #ddd;
+			}
+
+			th {
+				background: #6a11cb;
+				color: white;
+			}
+
+			tr:hover {
+				background: #f1f1f1;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Appointments</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>Patient Name</th>
+					<th>Email</th>
+					<th>Mobile</th>
+					<th>Gender</th>
+					<th>Date</th>
+					<th>Tests</th>
+					<th>Doctor</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for appt in appointments %}
+				<tr>
+					<td>{{ appt.name }}</td>
+					<td>{{ appt.email }}</td>
+					<td>{{ appt.mobile }}</td>
+					<td>{{ appt.gender }}</td>
+					<td>{{ appt.date }}</td>
+					<td>{{ appt.test }}</td>
+					<td>{{ appt.doctor_name }}</td>
+				</tr>
+				{% empty %}
+				<tr>
+					<td colspan="7" style="text-align: center">No appointments found.</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Book Appointment</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background: #f4f7f8;
+				padding: 20px;
+			}
+			.container {
+				max-width: 500px;
+				margin: auto;
+				background: white;
+				padding: 20px;
+				border-radius: 10px;
+				box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+			}
+			h2 {
+				text-align: center;
+				color: #333;
+			}
+			label {
+				display: block;
+				margin-top: 10px;
+				font-weight: bold;
+			}
+			input,
+			select {
+				width: 100%;
+				padding: 8px;
+				margin-top: 5px;
+				border-radius: 5px;
+				border: 1px solid #ccc;
+			}
+			button {
+				margin-top: 15px;
+				padding: 10px;
+				width: 100%;
+				background: #4caf50;
+				color: white;
+				border: none;
+				border-radius: 5px;
+				font-size: 16px;
+			}
+			button:hover {
+				background: #45a049;
+				cursor: pointer;
+			}
+
+			/* Radio & Checkbox styling */
+			.radio-group,
+			.checkbox-group {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				margin-top: 8px;
+			}
+			.radio-item,
+			.checkbox-item {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.radio-item input,
+			.checkbox-item input {
+				width: 18px;
+				height: 18px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h2>Book Appointment</h2>
+
+			<form method="POST">
+				{% csrf_token %}
+
+				<label for="name">Name</label>
+				<input type="text" name="name" value="{{name}}" required readonly />
+
+				<label for="email">Email</label>
+				<input type="email" name="email" value="{{email}}" required readonly />
+
+				<label for="mobile">Mobile</label>
+				<input type="number" name="mobile" value="{{mobile}}" required />
+
+				<label>Gender</label>
+				<div class="radio-group">
+					<div class="radio-item">
+						<input type="radio" id="male" name="gender" value="Male" required />
+						<label for="male">Male</label>
+					</div>
+					<div class="radio-item">
+						<input type="radio" id="female" name="gender" value="Female" />
+						<label for="female">Female</label>
+					</div>
+					<div class="radio-item">
+						<input type="radio" id="other" name="gender" value="Other" />
+						<label for="other">Other</label>
+					</div>
+				</div>
+
+				<label for="date">Date</label>
+				<input type="date" name="date" required />
+
+				<label>Tests</label>
+				<div class="checkbox-group">
+					<div class="checkbox-item">
+						<input type="checkbox" id="blood" name="test" value="Blood Test" />
+						<label for="blood">Blood Test</label>
+					</div>
+				</div>
+
+				<!-- <label for="doctor_name">Doctor Name</label>
+				<input type="text" name="doctor_name" required /> -->
+				<label for="doctor_name">Doctor Name</label>
+				<select name="doctor_name" required>
+					<option value="">-- Select Doctor --</option>
+					{% for doctor in data %}
+					<option value="{{ doctor.doctor_name }}">
+						{{ doctor.doctor_name }}
+					</option>
+					{% endfor %}
+				</select>
+
+				<button type="submit">Book Now</button>
+			</form>
+		</div>
+	</body>
+</html>

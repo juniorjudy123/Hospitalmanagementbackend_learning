@@ -60,7 +60,10 @@
 		<div class="container">
 			<h1>Welcome, Admin</h1>
 			<p>You have successfully logged in to the admin panel.</p>
-			<a href="#" class="btn">Go to Dashboard</a>
+			<a href="{% url 'view_appointments' %}" class="btn"
+				>View All Appointments</a
+			>
+			<a href="{% url 'logout' %}" class="btn">Logout</a>
 		</div>
 	</body>
 </html>

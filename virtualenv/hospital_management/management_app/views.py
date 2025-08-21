@@ -1,8 +1,9 @@
 # Create your views here.
 from django.shortcuts import render,redirect
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.http import HttpResponse
-from .models import Dept_tbl, Doctor_tbl, reg_tbl
+from .models import Dept_tbl, Doctor_tbl, reg_tbl,book_tbl
 
 def index(request):
     return render(request, 'index.html')
@@ -75,3 +76,64 @@ def loginUser(request):
 
     # For GET request, show the login page
     return render(request, 'login.html')
+
+
+
+def bookappointment(request):
+    if request.method=='POST':
+        name=request.POST.get('name')
+        email=request.POST.get('email')
+        mobile=request.POST.get('mobile')
+        gender=request.POST.get('gender')
+        date=request.POST.get('date')
+        test=request.POST.getlist('test')
+        doctor_name=request.POST.get('doctor_name')
+
+        user_id = request.session.get('id1')
+        user = reg_tbl.objects.get(id=user_id)
+
+        obj=book_tbl.objects.create(
+            name=name,
+            email=email,
+            mobile=mobile,
+            gender=gender,
+            date=date,
+            test=",".join(test),
+            doctor_name=doctor_name,
+            user=user
+            )
+
+        obj.save()
+        msg='Appointment booked'
+
+        return render(request,'patient.html',{'msg':msg})
+
+    user_name = request.session.get('name')
+    user_email= request.session.get('email')
+    user_mobile=request.session.get('mobile')
+
+
+    data=Doctor_tbl.objects.all()
+  
+    return render(request, "bookings.html",{'data':data,'name':user_name,'email':user_email,'mobile':user_mobile})
+
+
+def viewappointments(request):
+    user_id = request.session.get("id1")
+    if not user_id:
+        return redirect("loginUser")
+
+    user_type = request.session.get("user_type", "patient")
+
+    if user_type.lower() == "admin":
+        appointments = book_tbl.objects.all().order_by("-date")
+    else:
+        appointments = book_tbl.objects.filter(user_id=user_id).order_by("-date")
+
+    return render(request, "appointments.html", {"appointments": appointments})
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect(index)

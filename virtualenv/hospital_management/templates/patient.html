@@ -19,6 +19,21 @@
 				align-items: center;
 				justify-content: center;
 				color: #333;
+				position: relative;
+			}
+
+			/* Bookings link top-left */
+			.links {
+				position: absolute;
+				top: 20px;
+				left: 20px;
+			}
+
+			.links a {
+				text-decoration: none;
+				color: #6a11cb;
+				font-weight: bold;
+				font-size: 1.1rem;
 			}
 
 			.container {
@@ -58,14 +73,37 @@
 			.btn:hover {
 				background-color: #5a0dad;
 			}
+
+			/* Message styling */
+			.message {
+				position: absolute;
+				top: 20%;
+				text-align: center;
+				width: 100%;
+				font-size: 1.2rem;
+				font-weight: bold;
+				color: green;
+			}
 		</style>
 	</head>
 	<body>
+		<!-- Top-left Bookings link -->
+		<div class="links">
+			<a href="{% url 'bookings' %}">← Bookings</a>
+		</div>
+
+		<!-- Success message centered above container -->
+		{% if msg %}
+		<div class="message">{{ msg }}</div>
+		{% endif %}
+
+		<!-- Main container -->
 		<div class="container">
 			<h1>Welcome, Patient!</h1>
 			<p>
 				You have successfully logged in. We're here to help you manage your
 				health and appointments easily.
+				<a href={% url 'view_appointments'  %} class="btn">view your appointments</a>
 			</p>
 		</div>
 	</body>

@@ -31,3 +31,20 @@ class reg_tbl(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class book_tbl(models.Model):
+    name=models.CharField(max_length=50)
+    email=models.EmailField()
+    mobile=models.IntegerField()
+    gender=models.CharField(max_length=40)
+    date=models.DateField()
+    test=models.CharField(max_length=40)
+    doctor_name=models.CharField(max_length=50)
+    user=models.ForeignKey(reg_tbl,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+    
+
+    
